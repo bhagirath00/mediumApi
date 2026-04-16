@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+// Starter models — replace with your own
+model Post {
+
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  publishedAt DateTime
+  readingTime String?
+  thumbnail   String?
+  excerpt     String?
+  content     String?
+  url         String   @unique
+  hash        String
+  tags        Tag[]
+  mediumUsername String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+}
+
+model Tag {
+  id    String @id @default(cuid())
+  name  String @unique
+  posts Post[]
+}
